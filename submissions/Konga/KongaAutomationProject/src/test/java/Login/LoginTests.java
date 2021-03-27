@@ -6,6 +6,8 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.interactions.Actions;
 import org.testng.annotations.AfterTest;
+import org.testng.annotations.BeforeClass;
+import org.testng.annotations.Test;
 
 
 import java.util.concurrent.TimeUnit;
@@ -13,6 +15,7 @@ import java.util.concurrent.TimeUnit;
 public class LoginTests {
 
     private WebDriver driver;
+    @BeforeClass
 
     public void setUp() throws InterruptedException {
         System.setProperty("webdriver.chrome.driver", "Resources/chromedriver");
@@ -30,7 +33,9 @@ public class LoginTests {
 
         // make page wait while url fully loads
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-
+    }
+    @Test
+            public void Kongatest() throws InterruptedException {
         Actions actions = new Actions(driver);
 
         //click on login/signup button
@@ -66,7 +71,7 @@ public class LoginTests {
         Thread.sleep(5000);
 
         //Click on the Add to cart button
-        driver.findElement(By.xpath("/html/body/div[1]/div/section/div[3]/section/main/section[2]/section/section/section/section/ul/li[9]/div/div/div[2]/form/div[4]/button")).click();
+        driver.findElement(By.xpath("//*[@id=\"mainContent\"]/section[2]/section/section/section/section/ul/li[4]/div/div/div[2]/form/div[4]/button")).click();
         Thread.sleep(5000);
 
         //Click on the My Cart menu button
@@ -77,7 +82,13 @@ public class LoginTests {
         driver.findElement(By.xpath("//button[@class='_0a08a_3czMG' and text() = 'Checkout']")).click();
         Thread.sleep(5000);
 
+        //Click to change Address1
+        driver.findElement(By.xpath("//*[@id=\"mainContent\"]/form/div/div/section[1]/div[2]/div/div[1]/div/div[1]/form/div/div/a")).click();
+        Thread.sleep(5000);
 
+        //Click Address2
+        driver.findElement(By.xpath("//*[@id=\"app-content-wrapper\"]/div[2]/section/section/aside/div[2]/div/div/div[2]/div/form/button")).click();
+        Thread.sleep(5000);
 
         //Click to Use this Address
         driver.findElement(By.xpath("/html/body/div[1]/div/section/div[2]/section/section/aside/div[3]/div/div/div/a")).click();
@@ -100,7 +111,7 @@ public class LoginTests {
         driver.findElement(By.xpath("//button[@class = 'dashboard-card__button Card']")).click();
         Thread.sleep(5000);
 
-        //Enter the card number
+        //Enter the invalid card number
         driver.findElement(By.xpath("//input[@class = 'card-number input_class' and @id = 'card-number']")).sendKeys("0012553212211");
 
         //Enter Expiry Date
@@ -129,17 +140,9 @@ public class LoginTests {
 
         //Close iframe for input card modal
         driver.findElement(By.className("data-card__close")).click();
-
-        //Mouseover MyAccount
-        WebElement MyAccount = driver.findElement(By.linkText("MyAccount"));
-        actions.moveToElement(MyAccount).perform();
-
-        //click logout
-        WebElement Logout = driver.findElement(By.linkText("Logout"));
-        actions.click(Logout).perform();
-        Thread.sleep(5000);
-
     }
+    @AfterTest
+            public void QuitBrowser() {driver.quit();}
 
     public static void main(String args[]) throws InterruptedException {
         LoginTests test = new LoginTests();
